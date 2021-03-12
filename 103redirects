@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <clear />
+                <rule name="Redirect" patternSyntax="ECMAScript" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+                        <add input="{REQUEST_URI}" pattern="Weblogin.php$" negate="true" />
+                    </conditions>
+                    <action type="Redirect" url="https://newwebsite" redirectType="Found" />
+                </rule>
+                <rule name="HTTP Redirect HTTPS" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+                        <add input="{HTTPS}" pattern="off" />
+                    </conditions>
+                    <action type="Redirect" url="https://{HTTP_HOST}/{R:1}" />
+                </rule>
+                <rule name="Historical" stopProcessing="true">
+                    <match url="(.*)" />
+                    <action type="Rewrite" url="https://oldwebsiteadmin/{R:0}" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+</configuration>
