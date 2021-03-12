@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <clear />
+                <rule name="Redirect" patternSyntax="ECMAScript" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions logicalGrouping="MatchAny" trackAllCaptures="false" />
+                    <action type="Redirect" url="https://website.com" />
+                </rule>
+                <rule name="HTTP Redirect HTTPS" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+                        <add input="{HTTPS}" pattern="off" />
+                    </conditions>
+                    <action type="Redirect" url="https://{HTTP_HOST}/{R:1}" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+</configuration>
